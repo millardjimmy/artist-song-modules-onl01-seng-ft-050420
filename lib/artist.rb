@@ -1,34 +1,34 @@
-equire 'pry'
-
-
-class Artist
+class Song
   attr_accessor :name
-  attr_reader :songs
+  attr_reader :artist
 
-  extend Memorable::ClassMethods
-  include Memorable::InstanceMethods
-  include Paramable
-
-  @@artists = []
+  @@songs = []
 
   def initialize
-    super
-    @songs = []
+    @@songs << self
   end
 
   def self.find_by_name(name)
-    @@artists.detect{|a| a.name == name}
+    @@songs.detect{|a| a.name == name}
   end
 
   def self.all
-    @@artists
+    @@songs
   end
 
-  def add_song(song)
-    @songs << song
-    song.artist = self
+  def self.reset_all
+    self.all.clear
   end
 
-  def add_songs(songs)
-    songs.each { |song| add_song(song) }
+  def self.count
+    self.all.count
   end
+
+  def artist=(artist)
+    @artist = artist
+  end
+
+  def to_param
+    name.downcase.gsub(' ', '-')
+  end
+end
