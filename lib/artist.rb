@@ -3,7 +3,9 @@ class Artist
   attr_reader :songs
 
   @@artists = []
-
+extend Memorable::ClassMethods
+  include Memorable::InstanceMethods
+  include Paramable
   def initialize
     super
     @songs = []
